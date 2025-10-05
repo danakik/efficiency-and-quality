@@ -81,7 +81,7 @@ if __name__ == "__main__":
     manager2.upload("file2.txt", "Дані для S3")
     print(manager2.list_files())
 
-    # Щоб змінити сховище, можна додати метод зміни storage
+    # Щоб змінити сховище, можна додати метод зміни storag
     manager1.storage = s3_storage
     manager1.upload("file2.txt", "Дані для S3")
     print(manager1.list_files())
