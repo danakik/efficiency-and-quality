@@ -15,12 +15,12 @@ class FormMediator:
             for e in self.elements:
                 if isinstance(e, (NameField, PhoneField)):
                     e.active = sender.checked
-                    print(f"{e.name} активне: {e.active}")
+                    print(f"{e.name} active: {e.active}")
         elif isinstance(sender, SelfPickupCheckbox):
             for e in self.elements:
                 if isinstance(e, (DateSelector, TimeSelector, OtherRecipientCheckbox, NameField, PhoneField)):
                     e.active = not sender.checked
-                    print(f"{e.name} активне: {e.active}")
+                    print(f"{e.name} active: {e.active}")
 
 class FormElement:
     def __init__(self, name):
@@ -29,17 +29,17 @@ class FormElement:
         self.active = True
 
 class DateSelector(FormElement):
-    def __init__(self, name="Дата доставки"):
+    def __init__(self, name="Delivery Date"):
         super().__init__(name)
         self.date = None
         self.available_times = []
 
     def select_date(self, date):
         if not self.active:
-            print(f"{self.name} неактивний")
+            print(f"{self.name} is inactive")
             return
         self.date = date
-        print(f"Обрана дата: {self.date}")
+        print(f"Selected date: {self.date}")
         self.mediator.notify(self, "date_changed")
 
     def update_available_times(self):
@@ -47,45 +47,45 @@ class DateSelector(FormElement):
             self.available_times = ["10:00-12:00", "12:00-14:00"]
         else:
             self.available_times = ["14:00-16:00", "16:00-18:00"]
-        print(f"Доступні проміжки часу для {self.date}: {self.available_times}")
+        print(f"Available time slots for {self.date}: {self.available_times}")
 
 class TimeSelector(FormElement):
-    def __init__(self, name="Час доставки"):
+    def __init__(self, name="Delivery Time"):
         super().__init__(name)
         self.time = None
 
     def select_time(self, time):
         if not self.active:
-            print(f"{self.name} неактивний")
+            print(f"{self.name} is inactive")
             return
         self.time = time
-        print(f"Обраний час: {self.time}")
+        print(f"Selected time: {self.time}")
 
 class OtherRecipientCheckbox(FormElement):
-    def __init__(self, name="Отримувач інша особа"):
+    def __init__(self, name="Other Recipient"):
         super().__init__(name)
         self.checked = False
 
     def toggle(self, value: bool):
         if not self.active:
-            print(f"{self.name} неактивний")
+            print(f"{self.name} is inactive")
             return
         self.checked = value
         print(f"{self.name} = {self.checked}")
         self.mediator.notify(self, "checkbox_changed")
 
 class NameField(FormElement):
-    def __init__(self, name="Ім'я"):
+    def __init__(self, name="Name"):
         super().__init__(name)
         self.value = ""
 
 class PhoneField(FormElement):
-    def __init__(self, name="Телефон"):
+    def __init__(self, name="Phone"):
         super().__init__(name)
         self.value = ""
 
 class SelfPickupCheckbox(FormElement):
-    def __init__(self, name="Самовивіз"):
+    def __init__(self, name="Self Pickup"):
         super().__init__(name)
         self.checked = False
 
